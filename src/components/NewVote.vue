@@ -65,3 +65,9 @@ export default {
 }
 </script>
 
+<style lang="scss">
+.new-vote {
+  align-self: center;
+  margin: 15px 30px;
+}
+</style>

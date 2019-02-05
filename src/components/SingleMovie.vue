@@ -15,8 +15,8 @@
             <h2 class="header__title">{{ movie }}</h2>
         </header>
         
-        <article class="single-movie__result" v-if="data">
-          <section v-html="resultMsg"></section>
+        <article class="single-movie__result">
+          <section v-html="markedMessage"></section>
           <section>
             <a href="/" class="btn">Tickets</a>
             <a href="/" class="btn">Rent</a>
@@ -48,6 +48,7 @@ export default {
       poster: '',
       data: null,
       result: 'no-data',
+      message: 'Checking data...',
     };
   },
   mounted() {
@@ -87,43 +88,32 @@ export default {
       const votes = [this.data.after, this.data.none, this.data.during];
       const max = Math.max(...votes);
       const i = votes.findIndex(vote => vote == max);
-      let result;
+      let result, message;
       switch(i) {
         case 0:
           result = 'after';
+          message = `Sit Tight! *Yes* there is a post-credit scene after the credits of ${this.movie}.`;
           break;
         case 1:
           result = 'none';
+          message = `Unfortunately, there is *no* post-credit scene after the credits of ${this.movie}.`;
           break;
         case 2:
           result = 'during';
+          message = `There isn't anything after the credits, but there should be some clips during.`;
           break;
         default:
           result = 'no-data';
+          message = `Sorry, we haven't gotten enough *feedback* on this movie yet.`;
+          break;
       }
       this.result = result;
+      this.message = message;
     },
   },
   computed: {
-    resultMsg() {
-      let msg = '';
-      // Get index
-      let arr = [this.data.after || 0, this.data.none || 0, this.data.during || 0];
-      let i = arr.indexOf(Math.max.apply(null, arr));
-      switch(i) {
-        case 1:
-          msg = `Sit Tight! *Yes* there is a post-credit scene after the credits of ${this.movie}.`;
-          break;
-        case 2:
-          msg = `Unfortunately, there is *no* post-credit scene after the credits of ${this.movie}.`;
-          break;
-        case 3:
-          msg = `There isn't anything after the credits, but there should be some clips during.`;
-          break;
-        default:
-          msg = `Sorry, we haven't gotten enough *feedback* on ${this.movie} yet.`;
-      }
-      return marked( msg, {sanitize: true});
+    markedMessage() {
+      return marked( this.message, {sanitize: true});
     }
   }
 };
@@ -142,6 +132,10 @@ export default {
   --status-color: #B71C1C;
   --status-hl-color: #FF5252;
 }
+.single-movie__card.no-data {
+  --txt-color: #212121;
+}
+
 
 .single-movie {
   display: grid;
@@ -152,6 +146,8 @@ export default {
   max-height: 812px;
   margin: 0 auto;
   &__card {
+    --txt-color: #F5F5F5;
+
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -160,7 +156,7 @@ export default {
     background-color: var(--status-color);
     border: 4px solid var(--status-hl-color);
     border-radius: 10px;
-    color: #fefefe;
+    color: var(--txt-color);
   }
   &__site-title {
     text-transform: uppercase;

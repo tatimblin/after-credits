@@ -18,4 +18,5 @@ export default new Router({
       component: SingleMovie,
     },
   ],
+  mode: 'history',
 });

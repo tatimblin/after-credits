@@ -1,7 +1,7 @@
 <template>
   <div class="new-vote">
-    <h2 class="new-vote__title">Did the movie have a post-credits scene?</h2>
-    <div class="new-vote__submit">
+    <h2 class="new-vote__title">{{ prompt }}</h2>
+    <div class="new-vote__submit" v-if="!hasVoted">
       <button class="new-vote__item" @click="countVote('after')">Yes</button>
       <button class="new-vote__item" @click="countVote('none')">No</button>
       <button class="new-vote__item" @click="countVote('during')">During Credits</button>
@@ -18,11 +18,19 @@ export default {
     return {
       movie_id: this.$route.params.movie_id,
       docRef: '',
+      prompt: 'Did the movie have a post-credits scene?',
+      hasVoted: false,
     };
   },
   mounted() {
     // access the db document from any method
     this.docRef = db.collection('votes').doc(this.$route.params.movie_id);
+    // check if previously voted
+    const savedVote = localStorage.vote;
+    if (savedVote != null) {
+      this.localVote(savedVote)
+      this.hasVoted = true;
+    }
   },
   methods: {
     countVote(vote) {
@@ -42,8 +50,8 @@ export default {
         [vote]: count
       })
       .then(() => {
-        console.log('Document updated successfully.');
-        //vm.$forceUpdate();
+        localStorage.vote = vote;
+        this.localVote(vote)
       })
       .catch(() => {
         console.error('Function probably does not exist');
@@ -54,13 +62,29 @@ export default {
         vote: 1,
       })
       .then(() => {
-        console.log('Document created successfully.');
         vm.$forceUpdate();
+        localStorage.vote = vote;
+        this.localVote(vote)
       })
       .catch(() => {
         console.error('Something went wrong while creating the document');
       });
     },
+    localVote(vote) {
+      switch(vote) {
+        case 'after':
+          this.prompt = `You've indicated there is an after credits scene.`;
+          break;
+        case 'none':
+          this.prompt = `You've indicated there isn't an after credits scene.`;
+          break;
+        case 'during':
+          this.prompt = `You've indicated there is a scene during the credits.`;
+          break;
+        default:
+          this.prompt = 'Did the movie have a post-credits scene?';
+      }
+    }
   },
 }
 </script>

@@ -1,5 +1,6 @@
 <template>
   <div class="single-movie">
+    <page-head :title="`${movie} after credits scene`" :description="message"></page-head>
     <div class="single-movie__card" :class="result">
 
       <nav class="nav">
@@ -34,11 +35,13 @@
 import axios from 'axios';
 import db from './firebaseInit';
 import marked from 'marked';
+import PageHead from './PageHead';
 import NewVote from './NewVote';
 
 export default {
   name: 'SingleMovie',
   components: {
+    PageHead,
     NewVote,
   },
   data() {
@@ -157,6 +160,8 @@ export default {
     border: 4px solid var(--status-hl-color);
     border-radius: 10px;
     color: var(--txt-color);
+    transition: background-color 600ms ease,
+      border 300ms ease;
   }
   &__site-title {
     text-transform: uppercase;

@@ -17,8 +17,8 @@ export default {
   :root {
     --bg-color: #263238;
     --txt-color: #fefefe;
-    --status-color: #E0E0E0;
-    --status-hl-color: #9E9E9E;
+    --status-color: #f7f5f5;
+    --status-hl-color: #B0BEC5;
   }
 
   @media screen and (min-width: 800px) {

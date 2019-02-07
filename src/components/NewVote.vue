@@ -26,7 +26,8 @@ export default {
     // access the db document from any method
     this.docRef = db.collection('votes').doc(this.$route.params.movie_id);
     // check if previously voted
-    const savedVote = localStorage.vote;
+    const id = this.movie_id;
+    const savedVote = localStorage[id];
     if (savedVote != null) {
       this.localVote(savedVote)
       this.hasVoted = true;
@@ -50,7 +51,8 @@ export default {
         [vote]: count
       })
       .then(() => {
-        localStorage.vote = vote;
+        const id = this.movie_id;
+        localStorage[id] = vote;
         this.localVote(vote)
       })
       .catch(() => {
@@ -63,7 +65,8 @@ export default {
       })
       .then(() => {
         vm.$forceUpdate();
-        localStorage.vote = vote;
+        const id = this.movie_id;
+        localStorage[id] = vote;
         this.localVote(vote)
       })
       .catch(() => {

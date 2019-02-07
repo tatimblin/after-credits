@@ -11,10 +11,7 @@
 
         <h1 class="single-movie__site-title">After Credits</h1>
 
-        <header class="header">
-            <img class="header__image" :src="`https://image.tmdb.org/t/p/w300_and_h450_bestv2${poster}`" alt="">
-            <h2 class="header__title">{{ movie }}</h2>
-        </header>
+        <movie-item :movie="movie" :poster="poster"></movie-item>
         
         <article class="single-movie__result">
           <section v-html="markedMessage"></section>
@@ -37,12 +34,14 @@ import db from './firebaseInit';
 import marked from 'marked';
 import PageHead from './PageHead';
 import NewVote from './NewVote';
+import MovieItem from './MovieItem';
 
 export default {
   name: 'SingleMovie',
   components: {
     PageHead,
     NewVote,
+    MovieItem,
   },
   data() {
     return {
@@ -95,15 +94,15 @@ export default {
       switch(i) {
         case 0:
           result = 'after';
-          message = `Sit Tight! *Yes* there is a post-credit scene after the credits of ${this.movie}.`;
+          message = `*Yes!* there is a post-credit scene after the credits of ${this.movie}.`;
           break;
         case 1:
           result = 'none';
-          message = `Unfortunately, there is *no* post-credit scene after the credits of ${this.movie}.`;
+          message = `Sorry, others have indicated there is *no* post-credit scene after the credits of ${this.movie}.`;
           break;
         case 2:
           result = 'during';
-          message = `There isn't anything after the credits, but there should be some clips during.`;
+          message = `There may not be a post-credit scene, but there should be some clips during.`;
           break;
         default:
           result = 'no-data';
@@ -165,20 +164,6 @@ export default {
   }
   &__site-title {
     text-transform: uppercase;
-  }
-}
-
-.header {
-  display: grid;
-  grid-template-columns: 1fr 3fr;
-  align-items: end;
-
-  &__image {
-    width: 100%;
-  }
-  &__title {
-    padding: 0 15px;
-    font-size: 2.625em;
   }
 }
 

@@ -76,18 +76,18 @@ export default {
     localVote(vote) {
       switch(vote) {
         case 'after':
-          this.prompt = `You've indicated there is an after credits scene.`;
+          this.prompt = "You've indicated there is an after credits scene.";
           break;
         case 'none':
-          this.prompt = `You've indicated there isn't an after credits scene.`;
+          this.prompt = "You've indicated there isn't an after credits scene.";
           break;
         case 'during':
-          this.prompt = `You've indicated there is a scene during the credits.`;
+          this.prompt = "You've indicated there is a scene during the credits.";
           break;
         default:
           this.prompt = 'Did the movie have a post-credits scene?';
       }
-    }
+    },
   },
 }
 </script>

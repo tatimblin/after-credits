@@ -5,8 +5,18 @@
       <h2 class="header__callout">Quickly lookup if a movie has a post-credits scene.</h2>
     </header>
     <div class="movie-list">
-      <router-link class="movie-list__link" v-for="movie in movie_data" :key="movie.id" :to="`/${movie.id}`">
-        <movie-item :movie="movie.title" :poster="movie.poster_path" :rating="movie.vote_average" mod="list"/>
+      <router-link
+        class="movie-list__link"
+        v-for="movie in movie_data"
+        :key="movie.id"
+        :to="`/${movie.id}`
+      ">
+        <movie-item 
+          :movie="movie.title"
+          :poster="movie.poster_path"
+          :rating="movie.vote_average"
+          mod="list"
+        />
       </router-link>
     </div>
     <footer>
@@ -17,6 +27,7 @@
 
 <script>
 import axios from 'axios';
+import MovieDb from './movieDb';
 import MovieItem from './MovieItem';
 
 export default {
@@ -31,7 +42,7 @@ export default {
   },
   mounted() {
     // get list of movies currently in theaters
-    axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=4facee87d9690e4a1b4c2c594817a58d&language=en-US`)
+    axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=${MovieDb.MOVIE_API_KEY}&language=en-US`)
       .then((response) => {
         this.movie_data = response.data.results;
       })

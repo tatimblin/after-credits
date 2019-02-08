@@ -1,3 +1,6 @@
+src/components/movieDb.js
+src/components/firebaseConfig.js
+
 .DS_Store
 node_modules/
 /dist/

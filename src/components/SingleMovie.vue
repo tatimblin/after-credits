@@ -31,6 +31,7 @@
 <script>
 import axios from 'axios';
 import db from './firebaseInit';
+import MovieDb from './movieDb';
 import marked from 'marked';
 import PageHead from './PageHead';
 import NewVote from './NewVote';
@@ -79,7 +80,7 @@ export default {
       });
     },
     movieInfo(id) {
-      axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=4facee87d9690e4a1b4c2c594817a58d`)
+      axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${MovieDb.MOVIE_API_KEY}`)
         .then((response) => {
           this.movie = response.data.title;
           this.poster = response.data.poster_path;

@@ -45,6 +45,7 @@ export default {
           this.createVote(vote);
         }
       });
+      this.hasVoted = true;
     },
     updateVote(vote, count) {
       return this.docRef.update({

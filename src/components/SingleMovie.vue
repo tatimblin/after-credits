@@ -3,9 +3,7 @@
     <page-head :title="`${movie} after credits scene`" :description="message"></page-head>
     <div class="single-movie__card" :class="result">
 
-      <nav class="nav">
-        Navigation
-      </nav>
+      <movie-nav></movie-nav>
       
       <div class="single-movie__content">
 
@@ -36,6 +34,7 @@ import marked from 'marked';
 import PageHead from './PageHead';
 import NewVote from './NewVote';
 import MovieItem from './MovieItem';
+import MovieNav from './MovieNav';
 
 export default {
   name: 'SingleMovie',
@@ -43,6 +42,7 @@ export default {
     PageHead,
     NewVote,
     MovieItem,
+    MovieNav,
   },
   data() {
     return {
@@ -61,6 +61,7 @@ export default {
   },
   watch: {
     $route: function() {
+      // if route changes then movie data should too
       this.movieInfo(this.$route.params.movie_id)
       this.fetchData()
     },
@@ -88,7 +89,8 @@ export default {
         .catch(() => { this.movie = 'Movie not found.' });
     },
     calcResult() {
-      const votes = [this.data.after, this.data.none, this.data.during];
+      // figure out most voted then set class and message
+      const votes = [this.data.after || 0, this.data.none || 0, this.data.during || 0];
       const max = Math.max(...votes);
       const i = votes.findIndex(vote => vote == max);
       let result, message;

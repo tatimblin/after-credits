@@ -28,13 +28,12 @@
 
 <script>
 import axios from 'axios';
-import db from './firebaseInit';
-import MovieDb from './movieDb';
+import db from '@/components/firebaseInit';
 import marked from 'marked';
-import PageHead from './PageHead';
-import NewVote from './NewVote';
-import MovieItem from './MovieItem';
-import MovieNav from './MovieNav';
+import PageHead from '@/components/PageHead';
+import NewVote from '@/components/NewVote';
+import MovieItem from '@/components/MovieItem';
+import MovieNav from '@/components/MovieNav';
 
 export default {
   name: 'SingleMovie',
@@ -81,7 +80,7 @@ export default {
       });
     },
     movieInfo(id) {
-      axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${MovieDb.MOVIE_API_KEY}`)
+      axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.VUE_APP_MOVIEDB}`)
         .then((response) => {
           this.movie = response.data.title;
           this.poster = response.data.poster_path;

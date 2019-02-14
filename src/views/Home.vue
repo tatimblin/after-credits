@@ -27,8 +27,7 @@
 
 <script>
 import axios from 'axios';
-import MovieDb from './movieDb';
-import MovieItem from './MovieItem';
+import MovieItem from '@/components/MovieItem';
 
 export default {
   name: 'AppHome',
@@ -42,7 +41,7 @@ export default {
   },
   mounted() {
     // get list of movies currently in theaters
-    axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=${MovieDb.MOVIE_API_KEY}&language=en-US`)
+    axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.VUE_APP_MOVIEDB}&language=en-US`)
       .then((response) => {
         this.movie_data = response.data.results;
       })

@@ -4,14 +4,7 @@
   </div>
 </template>
 
-<script>
-
-export default {
-  name: 'App',
-};
-</script>
-
-<style>
+<style lang="scss">
   @import './assets/css/reset.css';
   @import url('https://fonts.googleapis.com/css?family=Lato:300,700');
 
